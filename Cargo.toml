@@ -5,3 +5,4 @@ authors = ["Mathspy <mathspy257@gmail.com>"]
 edition = "2018"
 
 [dependencies]
+http = "0.1"
