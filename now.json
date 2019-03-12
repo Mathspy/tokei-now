@@ -1,9 +1,10 @@
 {
   "name": "tokei-now",
   "version": 2,
+  "routes": [{"src": "/(?<user>[^/]+)/(?<repo>[^/]+)/?", "dest": "/?user=$user&repo=$repo"}],
   "builds": [
     {
-      "src": "src/index.rs",
+      "src": "index.rs",
       "use": "@now/rust"
     }
   ]

@@ -6,3 +6,8 @@ edition = "2018"
 
 [dependencies]
 http = "0.1"
+url = "1.*"
+
+[[bin]]
+name = "tokei-now"
+path = "index.rs"
