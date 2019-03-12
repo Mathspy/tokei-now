@@ -5,7 +5,10 @@ authors = ["Mathspy <mathspy257@gmail.com>"]
 edition = "2018"
 
 [dependencies]
+git2 = "0.8"
 http = "0.1"
+serde_json = "1.*"
+tokei = "9.*"
 url = "1.*"
 
 [[bin]]
