@@ -2,7 +2,7 @@ use core::fmt::Display;
 use git2::Repository;
 use http::{header, Request, Response, StatusCode};
 use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
+use std::{collections::HashMap, fs, io::ErrorKind};
 use tokei::{Config, Language, Languages};
 use url::Url;
 
@@ -62,9 +62,29 @@ fn handler(request: Request<()>) -> http::Result<Response<String>> {
         (Some(user), Some(repo)) => {
             let repo_url = format!("https://github.com/{}/{}", user, repo);
 
+            match fs::remove_dir_all("/tmp/repo") {
+                Ok(_) => (),
+                Err(e) => {
+                    if e.kind() != ErrorKind::NotFound {
+                        return Response::builder()
+                            .status(StatusCode::BAD_REQUEST)
+                            .body(format!("Failed to remove directory\n> {}", e,));
+                    }
+                }
+            };
+
             match Repository::clone(&repo_url, "/tmp/repo") {
-                Ok(repo) => repo,
-                Err(e) => panic!("failed to clone: {}", e),
+                Ok(_) => (),
+                Err(e) => {
+                    return Response::builder()
+                        .status(StatusCode::BAD_REQUEST)
+                        .body(format!(
+                            "Failed to clone {}\n> {:?}: {}",
+                            repo_url,
+                            e.code(),
+                            e.to_string(),
+                        ));
+                }
             };
 
             let mut languages = Languages::new();
@@ -76,7 +96,7 @@ fn handler(request: Request<()>) -> http::Result<Response<String>> {
                 .status(StatusCode::OK)
                 .header(header::CONTENT_TYPE, "text/plain")
                 .body(serde_json::to_string_pretty(&data).unwrap())
-                .expect("failed to render response");
+                .expect("Failed to render response");
 
             Ok(response)
         }
