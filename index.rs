@@ -75,7 +75,7 @@ fn handler(request: Request<()>) -> http::Result<Response<String>> {
             let response = Response::builder()
                 .status(StatusCode::OK)
                 .header(header::CONTENT_TYPE, "text/plain")
-                .body(serde_json::to_string(&data).unwrap())
+                .body(serde_json::to_string_pretty(&data).unwrap())
                 .expect("failed to render response");
 
             Ok(response)
