@@ -93,7 +93,7 @@ fn handler(request: Request<()>) -> http::Result<Response<String>> {
 
             let response = Response::builder()
                 .status(StatusCode::OK)
-                .header(header::CONTENT_TYPE, "text/plain")
+                .header(header::CONTENT_TYPE, "application/json")
                 .body(serde_json::to_string_pretty(&data).unwrap())
                 .expect("Failed to render response");
 
