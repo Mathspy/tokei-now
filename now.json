@@ -7,5 +7,6 @@
       "src": "index.rs",
       "use": "@now/rust"
     }
-  ]
+  ],
+  "alias": "tokei.now.sh"
 }
