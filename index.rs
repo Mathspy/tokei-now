@@ -44,10 +44,9 @@ fn make_json(languages: Languages) -> Output {
         total: Lang::from_language((
             &"Total",
             &languages
-                .iter()
+                .into_iter()
                 .fold(Language::new(), |mut total, (_, language)| {
-                    // TODO: PLZ NO CLONE
-                    total += language.clone();
+                    total += language;
                     total
                 }),
         )),
