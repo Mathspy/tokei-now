@@ -5,7 +5,7 @@
   "builds": [
     {
       "src": "index.rs",
-      "use": "@now/rust"
+      "use": "now-rust@1.0.1"
     }
   ],
   "alias": "tokei.now.sh"
